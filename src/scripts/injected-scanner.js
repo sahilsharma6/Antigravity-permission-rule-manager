@@ -44,7 +44,7 @@ function scannerSource(preset) {
 
   function matchAction(text) {
     // Strip list markers ("1. ", "2) ") that can leak into button text.
-    const t = coalesce(text).replace(/^\s*\d{1,2}[.)]\s+/, '').toLowerCase();
+    const t = coalesce(text).replace(/^\\s*\\d{1,2}[.)]\\s+/, '').toLowerCase();
     if (!t) return null;
     for (const a of PRESET.actions) {
       for (const m of a.matches) {
