@@ -1,0 +1,24 @@
+{
+  "name": "antigravity-auto-accept",
+  "version": "1.0.0",
+  "description": "Standalone auto-accept watcher for Google Antigravity / Antigravity IDE agent approval prompts via Chrome DevTools Protocol. Zero runtime dependencies.",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "doctor": "node src/cli.js doctor",
+    "dry": "node src/cli.js --dry-run",
+    "test": "node --test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0"
+  }
+}

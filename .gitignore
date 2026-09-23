@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Local, user-specific configuration (copy from config.example.json)
+config.json
+
+# Logs
+*.log
+logs/
+
+# Coverage / tooling
+.nyc_output/
+coverage/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

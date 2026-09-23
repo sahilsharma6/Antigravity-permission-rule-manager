@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "antigravity-auto-accept configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "enabled": { "type": "boolean", "default": true },
+    "dryRun": { "type": "boolean", "default": false },
+    "policy": {
+      "type": "string",
+      "enum": ["commands-only", "commands-and-edits", "everything"],
+      "default": "commands-only"
+    },
+    "cdp": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ports": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1, "maximum": 65535 },
+          "minItems": 1,
+          "default": [9333, 9222]
+        },
+        "host": { "type": "string", "default": "127.0.0.1" },
+        "reconnectMs": { "type": "integer", "minimum": 250, "default": 3000 }
+      }
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pollIntervalMs": { "type": "integer", "minimum": 100, "default": 1000 }
+      }
+    },
+    "dedupe": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "perButtonCooldownMs": { "type": "integer", "minimum": 250, "default": 5000 }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "blocked": { "type": "array", "items": { "type": "string" }, "default": [] },
+        "allowed": { "type": "array", "items": { "type": "string" }, "default": [] }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxActionsPerMinute": { "type": "integer", "minimum": 0, "default": 0 },
+        "maxConsecutiveFailures": { "type": "integer", "minimum": 1, "default": 10 }
+      }
+    },
+    "logging": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "logLevel": { "type": "string", "enum": ["debug", "info", "warn", "error"], "default": "info" },
+        "logFile": { "type": ["string", "null"], "default": "auto-accept.log" }
+      }
+    }
+  }
+}

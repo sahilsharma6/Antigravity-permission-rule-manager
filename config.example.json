@@ -1,0 +1,48 @@
+{
+  "//": "Copy this file to config.json and adjust. Every key is optional — omit a key to use its default.",
+  "$schema": "./config.schema.json",
+
+  "//enabled": "Master switch. Set false to idle the watcher (it keeps polling CDP but clicks nothing).",
+  "enabled": true,
+
+  "//dryRun": "true = log what would be clicked without clicking. Strongly recommended for the first run.",
+  "dryRun": false,
+
+  "//policy": "commands-only | commands-and-edits | everything — see README. CLI --policy overrides this.",
+  "policy": "commands-only",
+
+  "//cdp": "DevTools endpoint settings. Antigravity must be started with --remote-debugging-port=<port>.",
+  "cdp": {
+    "ports": [9333, 9222],
+    "host": "127.0.0.1",
+    "reconnectMs": 3000
+  },
+
+  "//scan": "Scanner timing. pollIntervalMs: idle DOM scan cadence (event-driven in between).",
+  "scan": {
+    "pollIntervalMs": 1000
+  },
+
+  "//dedupe": "Anti-duplicate clicks. perButtonCooldownMs: same element can't be clicked twice within window.",
+  "dedupe": {
+    "perButtonCooldownMs": 5000
+  },
+
+  "//commands": "Command filtering for terminal 'Run' prompts (word-boundary match, substring-ish).",
+  "commands": {
+    "blocked": ["rm -rf", "git push --force", "git push -f"],
+    "allowed": []
+  },
+
+  "//limits": "Rate limiting. maxActionsPerMinute: 0 = unlimited. maxConsecutiveFailures: watcher exits after this many failed clicks in a row.",
+  "limits": {
+    "maxActionsPerMinute": 0,
+    "maxConsecutiveFailures": 10
+  },
+
+  "//logging": "logLevel: debug | info | warn | error. logFile: null = stderr only.",
+  "logging": {
+    "logLevel": "info",
+    "logFile": "auto-accept.log"
+  }
+}
