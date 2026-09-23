@@ -46,6 +46,13 @@ export const PRESETS = Object.freeze([
     kind: ACTION_KINDS.PERMISSION,
     priority: 30,
     matches: [
+      // Antigravity permission dialogs phrase options as "Yes, allow this
+      // time" / "Yes, and always allow ...". We deliberately match ONLY the
+      // per-time grant: auto-clicking "always allow" would hand out standing
+      // permissions without review. Note these are prefix matches, so the
+      // order matters less than exact wording.
+      "yes, allow this time",
+      "allow this time",
       "always allow",
       "allow this conversation",
       "allow once",

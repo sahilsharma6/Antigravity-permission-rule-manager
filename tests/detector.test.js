@@ -15,6 +15,20 @@ test("detectKind maps button text to action kinds", () => {
   assert.equal(detectKind("Retry", preset)?.kind, "flow");
 });
 
+test("detectKind recognizes Antigravity's real permission dialog wording", () => {
+  // Real texts observed in Antigravity permission dialogs.
+  assert.equal(detectKind("Yes, allow this time", preset)?.kind, "permission");
+  assert.equal(
+    detectKind("Yes, allow this time \n powershell -Command Copy-Item", preset)?.kind,
+    "permission"
+  );
+  // Permanent grants must NOT be auto-clicked.
+  assert.equal(
+    detectKind("Yes, and always allow powershell -Command Copy-Item ...", preset),
+    null
+  );
+});
+
 test("detectKind returns null for unrelated or adversarial text", () => {
   assert.equal(detectKind("", preset), null);
   assert.equal(detectKind("accept-test.js", preset), null);

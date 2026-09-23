@@ -10,6 +10,9 @@ import { buildKeywordMatcher, isExactKeywordText } from "./presets.js";
 export function detectKind(text, preset) {
   const cleaned = String(text || "")
     .replace(/\s+/g, " ")
+    // Antigravity renders dialog options as numbered lists ("1. Yes, allow
+    // this time"); the marker can leak into the accessible text.
+    .replace(/^\s*\d{1,2}[.)]\s+/, "")
     .trim();
   if (!cleaned) return null;
 
