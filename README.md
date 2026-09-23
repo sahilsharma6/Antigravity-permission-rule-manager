@@ -11,6 +11,14 @@ only the buttons you have explicitly allow-listed by policy. All decision logic
 (policy, command filtering, dedupe, rate limiting) runs in Node where it can be
 logged, tested and audited; the page-side script only finds candidates.
 
+> 🚦 **New here? Start with the [Beginner's Getting Started Guide](GETTING_STARTED.md)** —
+> zero-to-running in ~5 minutes with copy-paste commands.
+
+> ⚠️ **Use at your own risk.** Automating approval clicks may sit outside the
+> spirit of Antigravity's terms of service. For a zero-risk alternative, try
+> Antigravity's built-in **Settings → Terminal Command Auto Execution →
+> "Always Proceed"** first. See [Security notes](#security-notes).
+
 ## What it does
 
 - Detects approval prompts rendered inside the agent panel webview:
@@ -58,7 +66,7 @@ cp config.example.json config.json
 The agent panel runs in an isolated Chromium process; the debug port is the
 only reliable way to reach its buttons.
 
-**Windows** — edit your Antigravity shortcut once and append to *Target*:
+**Windows** — edit your Antigravity shortcut once and append to _Target_:
 
 ```
 --remote-debugging-port=9333
@@ -96,30 +104,30 @@ npm run doctor
 Copy `config.example.json` to `config.json` (already git-ignored) and edit.
 Every key is optional. CLI flags override the file.
 
-| Key | Default | Description |
-| --- | ------- | ----------- |
-| `enabled` | `true` | Master switch. `false` idles the watcher (no clicks). |
-| `dryRun` | `false` | Log what would be accepted without clicking. |
-| `policy` | `commands-only` | Which prompt kinds may be auto-accepted. |
-| `cdp.ports` | `[9333, 9222]` | Ports probed in order for the debug endpoint. |
-| `cdp.host` | `127.0.0.1` | CDP host. Keep localhost — the port exposes full IDE control. |
-| `cdp.reconnectMs` | `3000` | Base wait between reconnect attempts. |
-| `scan.pollIntervalMs` | `1000` | Idle scan cadence (≥100ms). |
-| `dedupe.perButtonCooldownMs` | `5000` | Min time before the same logical prompt is clicked again. |
-| `commands.blocked` | `[]` | Substrings that veto a `Run` prompt (case-insensitive). |
-| `commands.allowed` | `[]` | If non-empty, **only** these prefixes may run (allow-list mode). |
-| `limits.maxActionsPerMinute` | `0` | Cap accept rate; `0` = unlimited. |
-| `limits.maxConsecutiveFailures` | `10` | Watcher stops after this many failures in a row. |
-| `logging.logLevel` | `info` | `debug` \| `info` \| `warn` \| `error`. |
-| `logging.logFile` | `auto-accept.log` | Log path; `null` = stderr only. |
+| Key                             | Default           | Description                                                      |
+| ------------------------------- | ----------------- | ---------------------------------------------------------------- |
+| `enabled`                       | `true`            | Master switch. `false` idles the watcher (no clicks).            |
+| `dryRun`                        | `false`           | Log what would be accepted without clicking.                     |
+| `policy`                        | `commands-only`   | Which prompt kinds may be auto-accepted.                         |
+| `cdp.ports`                     | `[9333, 9222]`    | Ports probed in order for the debug endpoint.                    |
+| `cdp.host`                      | `127.0.0.1`       | CDP host. Keep localhost — the port exposes full IDE control.    |
+| `cdp.reconnectMs`               | `3000`            | Base wait between reconnect attempts.                            |
+| `scan.pollIntervalMs`           | `1000`            | Idle scan cadence (≥100ms).                                      |
+| `dedupe.perButtonCooldownMs`    | `5000`            | Min time before the same logical prompt is clicked again.        |
+| `commands.blocked`              | `[]`              | Substrings that veto a `Run` prompt (case-insensitive).          |
+| `commands.allowed`              | `[]`              | If non-empty, **only** these prefixes may run (allow-list mode). |
+| `limits.maxActionsPerMinute`    | `0`               | Cap accept rate; `0` = unlimited.                                |
+| `limits.maxConsecutiveFailures` | `10`              | Watcher stops after this many failures in a row.                 |
+| `logging.logLevel`              | `info`            | `debug` \| `info` \| `warn` \| `error`.                          |
+| `logging.logFile`               | `auto-accept.log` | Log path; `null` = stderr only.                                  |
 
 ### Policies
 
-| Policy | Terminal `Run` | Edit `Accept` | Permissions (`Allow`) | Flow (`Retry`/`Continue`) |
-| --- | :-: | :-: | :-: | :-: |
-| `commands-only` *(default)* | ✅ filtered | ❌ | ✅ | ❌ |
-| `commands-and-edits` | ✅ filtered | ✅ | ✅ | ❌ |
-| `everything` | ✅ filtered | ✅ | ✅ | ✅ |
+| Policy                      | Terminal `Run` | Edit `Accept` | Permissions (`Allow`) | Flow (`Retry`/`Continue`) |
+| --------------------------- | :------------: | :-----------: | :-------------------: | :-----------------------: |
+| `commands-only` _(default)_ |  ✅ filtered   |      ❌       |          ✅           |            ❌             |
+| `commands-and-edits`        |  ✅ filtered   |      ✅       |          ✅           |            ❌             |
+| `everything`                |  ✅ filtered   |      ✅       |          ✅           |            ✅             |
 
 The default is deliberately conservative: file edits still require your review.
 
@@ -172,6 +180,7 @@ Antigravity wasn't started with the debug port, or was restarted without it
 (auto-updates can do this). Close all windows and relaunch with the flag.
 
 **Watcher connects but never accepts anything**
+
 - Run `npm run doctor` and check the listed targets — if none looks like the
   agent panel, open an agent conversation first so the webview exists.
 - Try `--verbose` to see scans and dedupe decisions.
@@ -242,4 +251,4 @@ tests/                 node:test suites mirroring src/
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT [LICENSE](LICENSE).
